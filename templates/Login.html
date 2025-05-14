@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTD Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #fff8e1, #ffd700, #ffa726);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-card {
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      padding: 50px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      max-width: 400px;
+      width: 100%;
+      border: 3px solid #d4af37;
+    }
+
+    h2 {
+      text-align: center;
+      color: #800000;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    label {
+      color: #5d4037;
+      font-weight: 600;
+    }
+
+    .form-control {
+      background-color: #fff8e1;
+      border: 1px solid #d7ccc8;
+      color: #5d4037;
+    }
+
+    .form-control:focus {
+      border-color: #ffa726;
+      box-shadow: none;
+    }
+
+    canvas {
+      border-radius: 6px;
+      background-color: #fff8e1;
+      margin-right: 10px;
+    }
+
+    .btn-primary {
+      background-color: #800000;
+      border: none;
+      font-weight: bold;
+    }
+
+    .btn-primary:hover {
+      background-color: #a52a2a;
+    }
+
+    .refresh-btn {
+      background: none;
+      border: none;
+      color: #800000;
+      font-size: 1.2rem;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .register-link a {
+      color: #6a1b1a;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2>TTD Portal Login</h2>
+    <form id="captcha-form" onsubmit="event.preventDefault(); Signin();">
+      <div class="mb-3">
+        <label for="Username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="Username" required>
+      </div>
+      <div class="mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="Password" required>
+      </div>
+      <div class="mb-3 d-flex align-items-center">
+        <canvas id="captcha" width="130" height="50"></canvas>
+        <button type="button" class="refresh-btn" id="refresh-captcha" title="Refresh Captcha">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+      <div class="mb-3">
+        <label for="captcha-input" class="form-label">Enter Captcha</label>
+        <input type="text" class="form-control" id="captcha-input" required>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </div>
+      <div class="register-link">
+        Don't have an account? <a href="/Register">Register here</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script>
+    // Captcha Generation
+    function generateCaptcha() {
+        const canvas = document.getElementById('captcha');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captcha = '';
+        
+        for(let i = 0; i < 6; i++) {
+            const char = chars.charAt(Math.floor(Math.random() * chars.length));
+            captcha += char;
+            ctx.font = '22px Arial';
+            ctx.fillStyle = `rgb(${Math.random() * 150},${Math.random() * 100},${Math.random() * 50})`;
+            ctx.fillText(char, 15 + i * 18, 35);
+        }
+        
+        sessionStorage.setItem('captchaCode', captcha);
+    }
+
+    // Initial captcha generation
+    generateCaptcha();
+
+    // Refresh captcha
+    document.getElementById('refresh-captcha').addEventListener('click', () => {
+        generateCaptcha();
+        document.getElementById('captcha-input').value = '';
+    });
+
+    // Login Function
+    async function Signin() {
+        const Username = document.getElementById('Username').value;
+        const Password = document.getElementById('Password').value;
+        const captchaInput = document.getElementById('captcha-input').value;
+        const storedCaptcha = sessionStorage.getItem('captchaCode');
+
+        // Validation
+        if(!Username || !Password || !captchaInput) {
+            alert('Please fill all fields');
+            return;
+        }
+
+        if(captchaInput !== storedCaptcha) {
+            alert('Invalid captcha');
+            generateCaptcha();
+            document.getElementById('captcha-input').value = '';
+            return;
+        }
+
+        try {
+            const response = await axios.post('/Login', {
+                Username: Username,
+                Password: Password
+            });
+
+            if(response.data.status === 'Success') {
+                alert('Login Successful!');
+                window.location.href = '/BhajanaMandhiralu';
+            } else {
+                alert('Invalid Credentials');
+                generateCaptcha();
+                document.getElementById('captcha-input').value = '';
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('Login Failed: ' + (error.response?.data?.detail || 'Server Error'));
+            generateCaptcha();
+            document.getElementById('captcha-input').value = '';
+        }
+    }
+  </script>
+</body>
+</html>

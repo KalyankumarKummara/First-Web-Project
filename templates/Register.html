@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TTD Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <<style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #fff3e0, #fbc02d, #ffb74d);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .register-card {
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      padding: 50px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      max-width: 450px;
+      width: 100%;
+      border: 3px solid #fbc02d;
+    }
+
+    h2 {
+      text-align: center;
+      color: #800000;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    label {
+      color: #5d4037;
+      font-weight: 600;
+    }
+
+    .form-control {
+      background-color: #fff8e1;
+      border: 1px solid #d7ccc8;
+      color: #5d4037;
+    }
+
+    .form-control:focus {
+      border-color: #ff9800;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background-color: #800000;
+      border: none;
+      font-weight: bold;
+    }
+
+    .btn-primary:hover {
+      background-color: #a52a2a;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login-link a {
+      color: #6a1b1a;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+    <div class="register-card">
+        <h2>TTD Portal Registration</h2>
+        <form method="POST" action="/Register" onsubmit="event.preventDefault(); Register();">
+            <div class="mb-3">
+                <label for="Username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="Username" onkeypress="return text(event)" name="Username" required>
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="Password" name="Password" required>
+            </div>
+            <div class="mb-3">
+                <label for="ConfirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            </div>
+            <div class="login-link">
+                Already have an account? <a href="/Login">Login here</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+        // Updated Register.js
+        async function Register() {
+            const Username = document.getElementById("Username").value;
+            const Email = document.getElementById("Email").value;
+            const Password = document.getElementById("Password").value;
+            const ConfirmPassword = document.getElementById("ConfirmPassword").value;
+
+            function isValidEmail(email) {
+                const re = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+                return re.test(String(email).toLowerCase());
+            }
+
+            if (!Username || !Email || !Password || !ConfirmPassword) {
+                alert("Please enter all the details!");
+                return;
+            }
+
+            if (!isValidEmail(Email)) {
+                alert('Please provide a valid email address');
+                return;
+            }
+
+            if (Password.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
+
+            if (ConfirmPassword !== Password) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            try {
+                const response = await axios.post('/Register', {
+                    Username: Username,
+                    Email: Email,
+                    Password: Password,
+                    ConfirmPassword: ConfirmPassword
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.data === "Success") {
+                    alert("Registered Successfully!");
+                    window.location.href = "/Login";
+                } else {
+                    alert("Registration Error: " + response.data);
+                }
+            } catch (error) {
+                console.error('Registration failed:', error);
+                const errorMessage = error.response?.data?.detail?.[0]?.msg || error.message;
+                alert(`Registration Failed: ${errorMessage}`);
+            }
+        }
+
+        function text(e) {
+            const k = e.which || e.keyCode;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123));
+        }
+    </script>
+</body>
+</html>

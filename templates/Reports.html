@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(to right, #ffe082, #ffb300, #fb8c00);
+            min-height: 100vh;
+        }
+        
+        .navbar-light {
+            background-color: #fff8e1 !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #ffb300;
+        }
+
+        .navbar-brand {
+            color: #6d4c41 !important;
+            font-weight: 600;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #6d4c41;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+        }
+
+        .navbar-light .navbar-nav .nav-link.active,
+        .navbar-light .navbar-nav .show > .nav-link {
+            color: #b71c1c;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        h2 {
+        text-align: center;
+        color: #6a1b1a;
+        margin-bottom: 2rem;
+        font-weight: bold;
+        font-size: 2.2rem;
+      }
+        .table-custom {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .table-custom thead th {
+            background-color: #a0522d;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .dt-button {
+            background-color: #a0522d !important;
+            border-color: #a0522d !important;
+            color: white !important;
+            margin: 5px !important;
+        }
+
+        .fstdropdown-select, 
+        .fstdropdown .fstselected {
+            min-height: 42px !important;
+            padding: 0.6rem 2.5rem 0.6rem 0.75rem !important;
+            line-height: 1.5 !important;
+            border-radius: 6px !important;
+        }
+        
+        .fstdropdown .fstselected::after {
+            right: 15px !important;
+            margin-top: -4px !important;
+        }
+        
+        .fstdropdown .fstlist div {
+            padding: 0.6rem 0.75rem !important;
+            font-size: 1rem !important;
+        }
+        
+        .fstdropdown-div {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .fstdiv {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+        
+        .fstdropdown {
+            width: 100% !important;
+        }
+        
+        .fstdropdown-select,
+        .fstdropdown .fstselected,
+        .fstdropdown .fstlist {
+            width: 100% !important;
+            min-width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fa fa-university"></i> Temple Services</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/BhajanaMandhiralu">BhajanaMandhiralu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/NewTempleConstruction">New Temple Construction</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/RenovationOfTemple">Renovation of Temple</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/Reports">Reports</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/Login" class="fa fa-sign-out" aria-hidden="true" title="Logout"></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+  <h2 class="mt-4 mb-4 text-center">Reports</h2>
+    <div class="container">
+        <div class="form-container">
+            
+            <form role="form" action="/Reports" method="post">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">District:</label>
+                        <select class="form-select fstdropdown-select" id="District_name" name="District" multiple>
+                            <option value="Anakapalli">Anakapalli</option>
+                            <option value="Ananthapuram">Ananthapuram</option>
+                            <option value="Annamayya">Annamayya</option>
+                            <option value="Alluri Seetharamaraju">Alluri Seetharamaraju</option>
+                            <option value="Bapatla">Bapatla</option>
+                            <option value="Chittoor">Chittoor</option>
+                            <option value="East Godavari">East Godavari</option>
+                            <option value="Eluru">Eluru</option>
+                            <option value="Guntur">Guntur</option>
+                            <option value="Kakinada">Kakinada</option>
+                            <option value="Konaseema">Konaseema</option>
+                            <option value="Krishna">Krishna</option>
+                            <option value="Kurnool">Kurnool</option>
+                            <option value="Nandyal">Nandyal</option>
+                            <option value="NTR">NTR</option>
+                            <option value="Palnadu">Palnadu</option>
+                            <option value="Parvathipuram Manyam">Parvathipuram Manyam</option>
+                            <option value="Prakasam">Prakasam</option>
+                            <option value="SPS Nellore">SPS Nellore</option>
+                            <option value="Srikakulam">Srikakulam</option>
+                            <option value="Sri Sathyasai">Sri Sathyasai</option>
+                            <option value="Tirupathi">Tirupathi</option>
+                            <option value="Vizianagaram">Vizianagaram</option>
+                            <option value="Vishakapatnam">Vishakapatnam</option>
+                            <option value="West Godavari">West Godavari</option>
+                            <option value="YSR Kadapa">YSR Kadapa</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Mandal:</label>
+                        <select class="form-select fstdropdown-select" id="Mandal_name" multiple name="Mandal">
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-12 d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if c %}
+            <div class="table-responsive table-custom mt-4">
+                <table id="example1" class="table table-striped table-hover table-bordered" style="width:100%">
+                    <thead class="align-middle">
+                        <tr>
+                            <th>District</th>
+                            <th>Mandal</th>
+                            <th>Village</th>
+                            <th>Colony</th>
+                            <th>Phone No</th>
+                            <th>Population</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        {% for d in ReportsData %}
+                        <tr>
+                            <td>{{d.request_data.District}}</td>
+                            <td>{{d.request_data.Mandal}}</td>
+                            <td>{{d.request_data.Village}}</td>
+                            <td>{{d.request_data.Colony}}</td>
+                            <td>{{d.request_data.Phone_no}}</td>
+                            <td>{{d.request_data.Population}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="/static/css/fstdropdown.min.css">
+    <script src="/static/javascript/fstdropdown.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    
+    <!-- Custom Script -->
+    <script>
+        $(document).ready(function() {
+            $('#example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        className: 'btn btn-primary',
+                        text: '<i class="fa fa-print"></i> Print',
+                        title: 'Temple Services Report',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+                ],
+                responsive: true,
+                paging: true,
+                pageLength: 10,
+                lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+                order: [[0, 'asc']],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search records..."
+                }
+            });
+
+            // District-Mandal dropdown logic
+            var d1 = document.getElementById("District_name");
+            var select = document.getElementById("Mandal_name");
+
+            function clearOptions() {
+                while (select.firstChild) {
+                    select.removeChild(select.firstChild);
+                }
+            }
+
+            function Dropdown() {
+                var selectedDistricts = Array.from(d1.selectedOptions).map(option => option.value);
+                
+                fetch("/MandalData", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ Districts: selectedDistricts }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    clearOptions();
+                    data.mandallist.forEach(mandal => {
+                        var opt = document.createElement("option");
+                        opt.text = opt.value = mandal;
+                        select.add(opt);
+                    });
+                    document.getElementById("Mandal_name").fstdropdown.rebind();
+                });
+            }
+
+            d1.addEventListener("change", Dropdown);
+        });
+    </script>
+</body>
+</html>
