@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="/static/css/fstdropdown.css">
+    <link rel="stylesheet" href="/static/css/fstdropdown.min.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js'
+        integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'
+        integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1'
+        crossorigin='anonymous'></script>
+
+    <script src="/static/javascript/fstdropdown.js"></script>
+    <script src="/static/javascript/fstdropdown.min.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+    <title>New Temple Construction</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #ffe082, #ffb300, #fb8c00);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #4e342e;
+        min-height: 100vh;
+      }
+
+      .navbar-light {
+        background-color: #fff8e1 !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-bottom: 3px solid #ffb300;
+      }
+
+      .navbar-brand {
+        color: #6d4c41 !important;
+        font-weight: 600;
+      }
+
+      .navbar-light .navbar-nav .nav-link {
+        color: #6d4c41;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        margin: 0 0.2rem;
+      }
+
+      .navbar-light .navbar-nav .nav-link.active,
+      .navbar-light .navbar-nav .show > .nav-link {
+        color: #b71c1c;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+      }
+
+      .fa-sign-out:before {
+        content: "\f08b";
+        color: #a0522d;
+        font-size: 1.5rem;
+      }
+
+      .container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+
+      .form-container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      h2 {
+        text-align: center;
+        color: #6a1b1a;
+        margin-bottom: 2rem;
+        font-weight: bold;
+        font-size: 2.2rem;
+      }
+
+      .form-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #4e342e;
+        display: inline-block;
+      }
+
+      .form-control, .up {
+        border-radius: 6px;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid #ddd;
+        transition: all 0.3s;
+        height: auto;
+      }
+
+      .fstdropdown-select {
+        padding: 0.6rem 0.75rem !important;
+        height: auto !important;
+        min-height: 42px !important;
+        border-radius: 6px !important;
+        border: 1px solid #ddd !important;
+      }
+
+      .fstdropdown-select:focus {
+        border-color: #a0522d !important;
+        box-shadow: 0 0 0 0.25rem rgba(160, 82, 45, 0.25) !important;
+      }
+
+      .fstdropdown-div {
+        font-size: 1rem !important;
+      }
+
+      .form-control:focus {
+        border-color: #a0522d;
+        box-shadow: 0 0 0 0.25rem rgba(160, 82, 45, 0.25);
+      }
+
+      .up {
+        background: #f3e5ab;
+        border: 1px solid #ffb300;
+        padding: 0.6rem;
+      }
+
+      .btn-primary {
+        background-color: #a0522d;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        font-weight: bold;
+        min-width: 120px;
+      }
+
+      .btn-primary:hover {
+        background-color: #8b4513;
+      }
+
+      .btn-secondary {
+        background-color: #616161;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        font-weight: bold;
+        min-width: 120px;
+      }
+
+      .btn-secondary:hover {
+        background-color: #424242;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .file-input-info {
+        font-size: 0.875rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+      }
+
+      .fstdropdown-select, 
+      .fstdropdown .fstselected {
+          min-height: 42px !important;
+          padding: 0.6rem 2.5rem 0.6rem 0.75rem !important;
+          line-height: 1.5 !important;
+          border-radius: 6px !important;
+      }
+      
+      .fstdropdown .fstselected::after {
+          right: 15px !important;
+          margin-top: -4px !important;
+      }
+      
+      .fstdropdown .fstlist div {
+          padding: 0.6rem 0.75rem !important;
+          font-size: 1rem !important;
+      }
+      
+      .fstdropdown-div {
+          width: 100% !important;
+          max-width: 100% !important;
+      }
+
+      .fstdiv {
+          max-width: 100% !important;
+          width: 100% !important;
+      }
+      
+      .fstdropdown {
+          width: 100% !important;
+      }
+      
+      .fstdropdown-select,
+      .fstdropdown .fstselected,
+      .fstdropdown .fstlist {
+          width: 100% !important;
+          min-width: 100% !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="fa fa-university"></i> Temple Services</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/BhajanaMandhiralu">BhajanaMandhiralu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/NewTempleConstruction">New Temple Construction</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/RenovationOfTemple">Renovation of Temple</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Reports">Reports</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <a href="/Login" class="fa fa-sign-out" aria-hidden="true" title="Logout"></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2>New Temple Construction</h2>
+          <div class="form-container">
+            <form id="ntcForm">
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="Phases" class="form-label">Phases:</label>
+                      <select class="fstdropdown-select" id="Phases" multiple="multiple" data-opened="false">
+                        <option value="Phase-1">Phase-1</option>
+                        <option value="Phase-2">Phase-2</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="District_name" class="form-label">Name of the District:</label>
+                    <select class="fstdropdown-select" id="District_name" multiple="multiple" data-opened="false">
+                      <option value="Anakapalli">Anakapalli</option>
+                      <option value="Ananthapuram">Ananthapuram</option>
+                      <option value="Annamayya">Annamayya</option>
+                      <option value="Alluri Seetharamaraju">Alluri Seetharamaraju</option>
+                      <option value="Bapatla">Bapatla</option>
+                      <option value="Chittoor">Chittoor</option>
+                      <option value="East Godavari">East Godavari</option>
+                      <option value="Eluru">Eluru</option>
+                      <option value="Guntur">Guntur</option>
+                      <option value="Kakinada">Kakinada</option>
+                      <option value="Konaseema">Konaseema</option>
+                      <option value="Krishna">Krishna</option>
+                      <option value="Kurnool">Kurnool</option>
+                      <option value="Nandyal">Nandyal</option>
+                      <option value="NTR">NTR</option>
+                      <option value="Palnadu">Palnadu</option>
+                      <option value="Parvathipuram Manyam">Parvathipuram Manyam</option>
+                      <option value="Prakasam">Prakasam</option>
+                      <option value="SPS Nellore">SPS Nellore</option>
+                      <option value="Srikakulam">Srikakulam</option>
+                      <option value="Sri Sathyasai">Sri Sathyasai</option>
+                      <option value="Tirupathi">Tirupathi</option>
+                      <option value="Vizianagaram">Vizianagaram</option>
+                      <option value="Vishakapatnam">Vishakapatnam</option>
+                      <option value="West Godavari">West Godavari</option>
+                      <option value="YSR Kadapa">YSR Kadapa</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Constituency_name" class="form-label">Name of the Constituency:</label>
+                    <input type="text" class="form-control" id="Constituency_name" onkeypress="return charevent(event)" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Mandal_name" class="form-label">Name of the Mandal:</label>
+                    <select class="fstdropdown-select" id="Mandal_name" multiple="multiple" data-opened="false" required>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Village_name" class="form-label">Name of the Village:</label>
+                    <input type="text" class="form-control" id="Village_name" onkeypress="return charevent(event)" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Colony_name" class="form-label">Name of the Colony:</label>
+                    <input type="text" class="form-control" id="Colony_name" onkeypress="return charevent(event)" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Phone_number" class="form-label">Phone Number:</label>
+                    <input type="tel" class="form-control" id="Phone_number" onkeypress="return numevent(event)" maxlength="10" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Village_population" class="form-label">Population of the Village:</label>
+                    <input type="text" class="form-control" id="Village_population" onkeypress="return numevent(event)" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Survey_no" class="form-label">Survey No:</label>
+                    <input type="text" class="form-control" id="Survey_no" onkeypress="return specialchar(event)" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="documents" class="form-label">Documents of Requestee:</label>
+                    <input type="file" class="form-control up" id="documents" name="file" required>
+                    <div class="file-input-info">Upload supporting documents (PDF, JPG, PNG)</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn btn-primary me-3" id="submitBtn">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/NewTempleConstruction';">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        FSToptions = {
+          placeholder: "Select options",
+          searchText: "Search...",
+          showSearch: true,
+        };
+
+        var d1 = document.getElementById("District_name");
+        var select = document.getElementById("Mandal_name");
+
+        function clearOptions() {
+          while (select.firstChild) {
+            select.removeChild(select.firstChild);
+          }
+        }
+
+        function Dropdown() {
+          function datavalue() {
+            var selectedDistricts = Array.from(d1.selectedOptions).map(
+              (option) => option.value);
+            return { Districts: selectedDistricts };
+          }
+
+          fetch("/GetMandals", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datavalue()),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              var mandaldata = data;
+              clearOptions();
+
+              for (var i = 0; i < mandaldata.mandallist.length; i++) {
+                var opt = document.createElement("option");
+                var last = mandaldata.mandallist[i];
+                opt.text = opt.value = last;
+                select.add(opt);
+              }
+
+              document.getElementById("Mandal_name").fstdropdown.rebind();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        d1.addEventListener("change", Dropdown);
+
+        document.getElementById('submitBtn').addEventListener('click', async function() {
+          var form = new FormData();
+          var Documents = document.getElementById("documents");
+          
+          if (!Documents.files[0]) {
+            alert("Please upload the required documents");
+            return;
+          } else {
+            form.append("file", Documents.files[0], Documents.value);
+
+            var settings = {
+              "url": "/uploadfile",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "accept": "application/json",
+              },
+              "processData": false,
+              "mimeType": "multipart/form-data",
+              "contentType": false,
+              "data": form
+            };
+          }
+
+          try {
+            const response = await axios(settings);
+            console.log(response);
+
+            var Phases = document.getElementById("Phases").value;
+            var District = document.getElementById("District_name").value;
+            var Constituency = document.getElementById("Constituency_name").value;
+            var Mandal = document.getElementById("Mandal_name").value;
+            var Village = document.getElementById("Village_name").value;
+            var Colony = document.getElementById("Colony_name").value;
+            var Phone_no = document.getElementById("Phone_number").value;
+            var Population = document.getElementById("Village_population").value;
+            var Survey_no = document.getElementById("Survey_no").value;
+            
+            if (!Phases || !District || !Constituency || !Mandal || !Village || !Colony || !Phone_no || !Population || !Survey_no) {
+              alert("Please enter all the required details!");
+              return;
+            }
+
+            if (Phone_no.length !== 10) {
+              alert("Phone number must be 10 digits!");
+              return;
+            }
+
+            var Documents = response.data.filename[0];
+            
+            var raw = JSON.stringify({
+              Phases: Phases,
+              District: District,
+              Constituency: Constituency,
+              Mandal: Mandal,
+              Village: Village,
+              Colony: Colony,
+              Documents: Documents,
+              Phone_no: Phone_no,
+              Population: Population,
+              Survey_no: Survey_no,
+            });
+
+            var config = {
+              method: "post",
+              url: "/NewTempleConstruction",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              data: raw,
+            };
+
+            const response2 = await axios(config);
+            const resp = response2.data;
+
+            if (resp == "Success") {
+              alert("Details saved successfully!");
+              location.href = "/NewTempleConstruction";
+            } else {
+              alert("Error while saving the details!");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while submitting the form");
+          }
+        });
+      });
+
+      function numevent(e) {
+        var k;
+        document.all ? k = e.keyCode : k = e.which;
+        return (k > 47 && k < 58) || k === 8 || k === 9 || k === 13 || k === 46;
+      }
+
+      function specialchar(e) {
+        var k;
+        document.all ? k = e.keyCode : k = e.which;
+        return ((k > 43 && k < 58) || (k > 64 && k < 91) || (k > 96 && k < 123) || 
+               k === 8 || k === 9 || k === 13 || k === 46 || k === 32 || k === 47);
+      }
+
+      function charevent(e) {
+        var k;
+        document.all ? k = e.keyCode : k = e.which;
+        return ((k > 64 && k < 91) || (k > 96 && k < 123) || 
+               (k > 44 && k < 47) || k === 32 || 
+               k === 8 || k === 9 || k === 13 || k === 46);
+      }
+    </script>
+  </body>
+</html>
