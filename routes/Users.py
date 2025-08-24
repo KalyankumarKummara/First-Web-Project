@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from models.Users import User
 import bcrypt
 import pymongo 
-myclient= pymongo.MongoClient("mongodb://localhost:27017/")
+myclient= pymongo.MongoClient("mongodb+srv://kalyan:Kalyankumar%40123@cluster0.sur1pof.mongodb.net/")
 DB = myclient["Project"]
 mycol= DB["Usercol"]
 user3 = APIRouter()
