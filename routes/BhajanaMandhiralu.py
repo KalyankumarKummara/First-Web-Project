@@ -1,6 +1,12 @@
 from fastapi import APIRouter, Request, UploadFile,File
 from models.BhajanaMandhiralu import BhajanaMandhiralu
 
+import os
+from fastapi import UploadFile, File
+
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
 
 import pymongo
 myclient = pymongo.MongoClient("mongodb+srv://kalyan:Kalyankumar%40123@cluster0.sur1pof.mongodb.net/")
@@ -57,7 +63,8 @@ async def GetMandalsByDistrict(request: Request):
 @user.post("/uploadfile")
 async def create_upload_file(file: UploadFile = File(...)):
     contents = await file.read()
-    with open("D:\Requested Documents/" + file.filename, "wb") as f:
+    file_path = os.path.join(UPLOAD_DIR, file.filename)  # cross-platform path
+    with open(file_path, "wb") as f:
         f.write(contents)
     print(file.filename)
     return {"filename": file.filename}
